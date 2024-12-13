@@ -4,14 +4,21 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const SearchComponent = ({ searchValue, onSearchChange }) => {
   return (
-    <Box sx={{ marginBottom: 2, display: "flex", justifyContent: "center" }}>
+    <Box
+      sx={{
+        marginBottom: 2,
+        display: "flex",
+        justifyContent: "center",
+        alignContent: "center",
+      }}
+    >
       <TextField
-        label="Search Characters"
+        label="Arama..."
         variant="outlined"
         value={searchValue}
         onChange={(e) => onSearchChange(e.target.value)}
         sx={{
-          width: "800px", // Tablo genişliği ile eşleştirildi
+          width: "700px", // Tablo genişliği ile eşleştirildi
           backgroundColor: "#ffffff", // Beyaz arka plan
           borderRadius: 1, // Köşeleri yuvarlat
           boxShadow: 2, // Hafif gölge efekti
