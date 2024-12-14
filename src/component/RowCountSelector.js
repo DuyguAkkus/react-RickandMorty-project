@@ -45,7 +45,7 @@ const RowCountSelector = ({ onApplyRowCount }) => {
         helperText={error ? "Lütfen Bir Sayı Giriniz" : ""}
         sx={{
           marginBottom: 2,
-          width: "150px", // SearchComponent ile aynı genişlik
+          width: "250px", // Genişlik artırıldı
           backgroundColor: "#ffffff",
           borderRadius: 1,
           boxShadow: 2,
@@ -60,6 +60,7 @@ const RowCountSelector = ({ onApplyRowCount }) => {
           height: "56px", // TextField ile aynı yükseklik
           fontWeight: "400", // Daha hafif bir ağırlık
           padding: "0 25px", // Yatayda biraz boşluk
+          width: "160px", // Button genişliği artırıldı
         }}
       >
         Uygula

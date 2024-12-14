@@ -17,7 +17,7 @@ const SortButton = ({ onSort }) => {
       sx={{
         marginBottom: 2,
         marginLeft: "auto",
-        fontSize: "0.7 rem",
+        fontSize: "0.4 rem",
         padding: "10px 20px",
         color: "#1976d2", // Mavi yazı rengi
         backgroundColor: "#f7f9fc", // Arka plan
@@ -29,9 +29,9 @@ const SortButton = ({ onSort }) => {
         },
         height: "56px",
         width: "100%",
-        maxWidth: "200px",
+        maxWidth: "220px",
         "@media (max-width: 600px)": {
-          fontSize: "0.875rem",
+          fontSize: "0.775rem",
           padding: "8px 16px",
         },
       }}
