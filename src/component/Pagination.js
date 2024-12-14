@@ -23,6 +23,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         gap: 1,
         marginTop: 3,
         flexWrap: "wrap",
+        width: "100%", // Tam genişlik
+        maxWidth: "600px", // Maksimum genişlik
+        margin: "0 auto", // Yatayda ortalama
+        padding: 2, // İçerik boşluğu
       }}
     >
       {/* Prev Group Button */}

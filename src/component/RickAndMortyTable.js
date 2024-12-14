@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import FilterComponent from "./FilterComponent";
 import SearchComponent from "./SearchComponent";
 import CharacterDetailModal from "./CharacterDetailModal";
@@ -9,6 +9,7 @@ import Pagination from "./Pagination";
 import CharacterTable from "./CharacterTable";
 import SpeciesFilter from "./SpeciesFilter";
 import SortButton from "./SortButton";
+import LoadingComponent from "./ LoadingComponent";
 
 const RickAndMortyTable = () => {
   const [characters, setCharacters] = useState([]);
@@ -22,8 +23,12 @@ const RickAndMortyTable = () => {
   const [rowCount, setRowCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
+    setErrorMessage("");
     const apiURL = `https://rickandmortyapi.com/api/character/?page=${currentPage}`;
     axios
       .get(apiURL)
@@ -31,9 +36,14 @@ const RickAndMortyTable = () => {
         setCharacters(response.data.results);
         setFilteredCharacters(response.data.results);
         setTotalPages(response.data.info.pages);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setErrorMessage(
+          "API'ye erişilirken bir hata oluştu. Lütfen bağlantınızı kontrol edin veya daha sonra tekrar deneyin."
+        );
+        setIsLoading(false);
       });
   }, [currentPage]);
 
@@ -95,105 +105,123 @@ const RickAndMortyTable = () => {
     setSearchValue("");
   };
 
+  if (isLoading || errorMessage) {
+    return (
+      <LoadingComponent isLoading={isLoading} errorMessage={errorMessage} />
+    );
+  }
+
   return (
     <Box
       sx={{
         minHeight: "100vh",
         backgroundColor: "#f5f5f5",
         padding: 2,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
       }}
     >
-      <Grid container spacing={2} alignItems="flex-start">
-        {/* Filtreler Sol Tarafa */}
-        <Grid item xs={12} sm={4} md={3}>
-          <Box
-            sx={{
-              backgroundColor: "#ffffff",
-              padding: 2,
-              borderRadius: 2,
-              boxShadow: 3,
-              marginBottom: 2, // Filtreleri tabloya daha yakın yapmak için
-            }}
-          >
-            <FilterComponent
-              title="Status"
-              options={[
-                { label: "Alive", value: "Alive" },
-                { label: "Dead", value: "Dead" },
-                { label: "Unknown", value: "unknown" },
-              ]}
-              selectedOption={statusFilter}
-              onFilterChange={setStatusFilter}
-              onClearFilters={clearFilters}
-            />
-            <FilterComponent
-              title="Gender"
-              options={[
-                { label: "Male", value: "Male" },
-                { label: "Female", value: "Female" },
-                { label: "Genderless", value: "Genderless" },
-                { label: "Unknown", value: "unknown" },
-              ]}
-              selectedOption={genderFilter}
-              onFilterChange={setGenderFilter}
-              onClearFilters={clearFilters}
-            />
-            <SpeciesFilter
-              speciesOptions={[
-                "Human",
-                "Alien",
-                "Robot",
-                "Mythological Creature",
-              ]}
-              selectedSpecies={speciesFilter}
-              onSpeciesChange={setSpeciesFilter}
-              onClearSpecies={() => setSpeciesFilter("")}
-            />
-          </Box>
-        </Grid>
+      {/* Üst Alan */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 2,
+        }}
+      >
+        <SearchComponent
+          searchValue={searchValue}
+          onSearchChange={setSearchValue}
+          sx={{
+            flex: 1,
+            minWidth: "250px",
+          }}
+        />
+        <RowCountSelector onApplyRowCount={setRowCount} />
+        <SortButton onSort={sortCharactersByName} />
+      </Box>
 
-        {/* Tablo ve Butonlar Sağ Tarafa */}
-        <Grid item xs={12} sm={8} md={9}>
-          {/* Arama, Satır Sayısı ve Sıralama Butonları */}
-          <Grid
-            container
-            spacing={2}
-            alignItems="center"
-            sx={{ marginBottom: 2 }}
-          >
-            <Grid item xs={12} sm={5} md={6}>
-              <SearchComponent
-                searchValue={searchValue}
-                onSearchChange={setSearchValue}
-                sx={{
-                  width: "100%",
-                  input: { fontSize: "1.2rem" },
-                }}
-              />
-            </Grid>
-            <Grid item xs={6} sm={4} md={3}>
-              <RowCountSelector onApplyRowCount={setRowCount} />
-            </Grid>
-            <Grid item xs={6} sm={3} md={3} sx={{ textAlign: "right" }}>
-              <SortButton onSort={sortCharactersByName} />
-            </Grid>
-          </Grid>
+      {/* Ana İçerik */}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 2,
+          flex: 1,
+          overflowX: "auto",
+        }}
+      >
+        {/* Sol Filtreler */}
+        <Box
+          sx={{
+            flex: "0 0 300px",
+            maxWidth: "300px",
+            backgroundColor: "#ffffff",
+            padding: 2,
+            borderRadius: 2,
+            boxShadow: 3,
+            minHeight: "fit-content",
+          }}
+        >
+          <FilterComponent
+            title="Status"
+            options={[
+              { label: "Alive", value: "Alive" },
+              { label: "Dead", value: "Dead" },
+              { label: "Unknown", value: "unknown" },
+            ]}
+            selectedOption={statusFilter}
+            onFilterChange={setStatusFilter}
+            onClearFilters={clearFilters}
+          />
+          <FilterComponent
+            title="Gender"
+            options={[
+              { label: "Male", value: "Male" },
+              { label: "Female", value: "Female" },
+              { label: "Genderless", value: "Genderless" },
+              { label: "Unknown", value: "unknown" },
+            ]}
+            selectedOption={genderFilter}
+            onFilterChange={setGenderFilter}
+            onClearFilters={clearFilters}
+          />
+          <SpeciesFilter
+            speciesOptions={[
+              "Human",
+              "Alien",
+              "Robot",
+              "Mythological Creature",
+            ]}
+            selectedSpecies={speciesFilter}
+            onSpeciesChange={setSpeciesFilter}
+            onClearSpecies={() => setSpeciesFilter("")}
+          />
+        </Box>
 
-          {/* Tablo */}
+        {/* Sağ İçerik */}
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
           <CharacterTable
             characters={filteredCharacters}
             onRowClick={handleRowClick}
             rowCount={rowCount}
           />
-        </Grid>
-      </Grid>
-
-      {/* Pagination */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </Box>
+      </Box>
 
       {/* Detay Modal */}
       <CharacterDetailModal
