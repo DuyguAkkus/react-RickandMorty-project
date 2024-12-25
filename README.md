@@ -2,8 +2,6 @@
 
 Bu proje, kullanıcıların Rick and Morty karakterlerini görüntüleyebileceği, filtreleyebileceği ve sıralayabileceği bir React uygulamasıdır. Rick and Morty API kullanılarak geliştirilmiştir.
 
-<img src="./homePageScreen.png" alt="Ana Sayfa"/>
-
 ## Özellikler
 
 - Rick and Morty API entegrasyonu ile karakter listeleme
