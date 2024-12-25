@@ -1,18 +1,11 @@
 import React from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import styles from "./LoadingComponentStyle";
+
 
 const LoadingComponent = ({ isLoading, errorMessage }) => {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "50vh", // Yüksekliği ayarla
-        gap: 2, // Elemanlar arası boşluk
-      }}
-    >
+    <Box sx={styles.container}>
       {/* Eğer veri yükleniyorsa yükleme animasyonu */}
       {isLoading && (
         <>

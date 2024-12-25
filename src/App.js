@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import RickAndMortyTable from "./component/RickAndMortyTable";
-import Header from "./component/Header";
-import LoadingComponent from "./component/ LoadingComponent";
+import RickAndMortyTable from "./component/rickAndMortyTable/RickAndMortyTable";
+import Header from "./component/header/Header";
+import LoadingComponent from "./component/loading/LoadingComponent";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false); // Genel yükleme durumu

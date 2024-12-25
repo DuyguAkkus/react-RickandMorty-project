@@ -1,28 +1,17 @@
 import React from "react";
 import { TextField, Box, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { styles } from "./SearchComponentStyle";
 
 const SearchComponent = ({ searchValue, onSearchChange }) => {
   return (
-    <Box
-      sx={{
-        marginBottom: 2,
-        display: "flex",
-        justifyContent: "center",
-        alignContent: "center",
-      }}
-    >
+    <Box sx={styles.container}>
       <TextField
         label="Arama..."
         variant="outlined"
         value={searchValue}
         onChange={(e) => onSearchChange(e.target.value)}
-        sx={{
-          width: "700px", // Tablo genişliği ile eşleştirildi
-          backgroundColor: "#ffffff", // Beyaz arka plan
-          borderRadius: 1, // Köşeleri yuvarlat
-          boxShadow: 2, // Hafif gölge efekti
-        }}
+        sx={styles.textField}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Box, Grid } from "@mui/material";
-import FilterComponent from "./FilterComponent";
-import SearchComponent from "./SearchComponent";
-import CharacterDetailModal from "./CharacterDetailModal";
-import RowCountSelector from "./RowCountSelector";
-import Pagination from "./Pagination";
-import CharacterTable from "./CharacterTable";
-import SpeciesFilter from "./SpeciesFilter";
-import SortButton from "./SortButton";
-import LoadingComponent from "./ LoadingComponent";
+import FilterComponent from "../filter/FilterComponent";
+import SearchComponent from "../searchComponent/SearchComponent";
+import CharacterDetailModal from "../characterDetail/CharacterDetailModal";
+import RowCountSelector from "../rowCountSelector/RowCountSelector";
+import Pagination from "../pagination/Pagination";
+import CharacterTable from "../characterTable/CharacterTable";
+import SpeciesFilter from "../speciesFilter/SpeciesFilter";
+import SortButton from "../sortButton/SortButton";
+import LoadingComponent from "../loading/LoadingComponent";
+import { styles } from "./RickAndMortyTableStyle";
 
 const RickAndMortyTable = () => {
   const [characters, setCharacters] = useState([]);
@@ -112,18 +113,11 @@ const RickAndMortyTable = () => {
   }
 
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: "#f5f5f5", padding: 2 }}>
+    <Box sx={styles.container}>
       <Grid container spacing={2}>
         {/* Filtreler Sol Tarafa */}
         <Grid item xs={12} sm={3} md={3}>
-          <Box
-            sx={{
-              backgroundColor: "#ffffff",
-              padding: 2,
-              borderRadius: 2,
-              boxShadow: 3,
-            }}
-          >
+          <Box sx={styles.filterContainer}>
             <FilterComponent
               title="Status"
               options={[
@@ -173,10 +167,7 @@ const RickAndMortyTable = () => {
               <SearchComponent
                 searchValue={searchValue}
                 onSearchChange={setSearchValue}
-                sx={{
-                  flex: 1,
-                  minWidth: "300px", // Genişliği arttırdık
-                }}
+                sx={styles.searchComponent}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>

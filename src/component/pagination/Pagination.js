@@ -1,12 +1,13 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
+import { styles } from "./PaginationStyle";
 
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pagesPerGroup = 5; // Her grupta gösterilecek sayfa sayısı
-  const currentGroup = Math.ceil(currentPage / pagesPerGroup); // Şu anki grup
-  const totalGroups = Math.ceil(totalPages / pagesPerGroup); // Toplam grup sayısı
-  const startPage = (currentGroup - 1) * pagesPerGroup + 1; // Şu anki grubun başlangıç sayfası
-  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages); // Şu anki grubun bitiş sayfası
+  const pagesPerGroup = 5;
+  const currentGroup = Math.ceil(currentPage / pagesPerGroup);
+  const totalGroups = Math.ceil(totalPages / pagesPerGroup);
+  const startPage = (currentGroup - 1) * pagesPerGroup + 1;
+  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -15,21 +16,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 1,
-        marginTop: 3,
-        flexWrap: "wrap",
-        width: "100%", // Tam genişlik
-        maxWidth: "600px", // Maksimum genişlik
-        margin: "0 auto", // Yatayda ortalama
-        padding: 2, // İçerik boşluğu
-      }}
-    >
-      {/* Prev Group Button */}
+    <Box sx={styles.container}>
       <Button
         variant="contained"
         color="primary"
@@ -39,7 +26,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         Önceki
       </Button>
 
-      {/* Page Numbers */}
       {Array.from({ length: endPage - startPage + 1 }, (_, index) => {
         const page = startPage + index;
         return (
@@ -48,13 +34,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
             variant={page === currentPage ? "contained" : "outlined"}
             color={page === currentPage ? "primary" : "default"}
             onClick={() => handlePageChange(page)}
+            sx={page === currentPage ? styles.button : {}}
           >
             {page}
           </Button>
         );
       })}
 
-      {/* Next Group Button */}
       <Button
         variant="contained"
         color="primary"

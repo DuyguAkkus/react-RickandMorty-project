@@ -8,6 +8,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { styles } from "./CharacterDetailModalStyle";
 
 const CharacterDetailModal = ({ open, onClose, character }) => {
   if (!character) return null; // Karakter bilgisi yoksa modal gösterme
@@ -16,20 +17,11 @@ const CharacterDetailModal = ({ open, onClose, character }) => {
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
       <DialogTitle>{character.name}</DialogTitle>
       <DialogContent>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: 2,
-          }}
-        >
+        <Box sx={styles.container}>
           <img
             src={character.image}
             alt={character.name}
-            width="150"
-            height="150"
-            style={{ borderRadius: "50%" }}
+            style={styles.image}
           />
           <Typography variant="body1">
             <strong>Species:</strong> {character.species}

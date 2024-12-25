@@ -6,34 +6,29 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  Paper
 } from "@mui/material";
+import { styles } from "./CharacterTableStyle";
 
 const CharacterTable = ({ characters, onRowClick, rowCount }) => {
   return (
-    <TableContainer
-      component={Paper}
-      sx={{
-        boxShadow: 3,
-        borderRadius: 2,
-      }}
-    >
+    <TableContainer component={Paper} sx={styles.tableContainer}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
+            <TableCell align="center" sx={styles.headerCell}>
               Image
             </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
+            <TableCell align="center" sx={styles.headerCell}>
               Name
             </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
+            <TableCell align="center" sx={styles.headerCell}>
               Species
             </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
+            <TableCell align="center" sx={styles.headerCell}>
               Status
             </TableCell>
-            <TableCell align="center" sx={{ fontWeight: "bold" }}>
+            <TableCell align="center" sx={styles.headerCell}>
               Gender
             </TableCell>
           </TableRow>
@@ -45,18 +40,13 @@ const CharacterTable = ({ characters, onRowClick, rowCount }) => {
               <TableRow
                 key={character.id}
                 onClick={() => onRowClick(character)}
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": { backgroundColor: "#f0f0f0" },
-                }}
+                sx={styles.tableRow}
               >
                 <TableCell align="center">
                   <img
                     src={character.image}
                     alt={character.name}
-                    width="50"
-                    height="50"
-                    style={{ borderRadius: "50%" }}
+                    style={styles.characterImage}
                   />
                 </TableCell>
                 <TableCell align="center">{character.name}</TableCell>
